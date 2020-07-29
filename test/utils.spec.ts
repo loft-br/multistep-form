@@ -1,4 +1,8 @@
-import { getStepId, transformStepsToMap } from '../src/utils';
+import {
+  getStepId,
+  transformStepsToMap,
+  devEnvironmentError,
+} from '../src/utils';
 import { steps } from './__mocks__';
 
 describe('utils', () => {
@@ -44,6 +48,42 @@ describe('utils', () => {
 
       it.each(slice)('should re turn a map with %o as part of value', step => {
         expect(map.get(step.id)).toMatchObject(step);
+      });
+    });
+  });
+
+  describe('devEnvironmentError', () => {
+    describe('when is development environment', () => {
+      it('should throw error when condition is true', () => {
+        spyOn(console, 'error');
+
+        expect(() => devEnvironmentError(true, 'A message')).toThrowError(
+          /A message/
+        );
+      });
+
+      it('should not throw error when condition is false', () => {
+        expect(() =>
+          devEnvironmentError(false, 'Dummy message')
+        ).not.toThrowError(/Dummy message/);
+      });
+    });
+
+    describe('when is not development environment', () => {
+      beforeEach(() => {
+        process.env.NODE_ENV = 'production';
+      });
+
+      it('should not throw error when condition is true', () => {
+        expect(() => devEnvironmentError(true, 'A message')).not.toThrowError(
+          /A message/
+        );
+      });
+
+      it('should not throw error when condition is false', () => {
+        expect(() =>
+          devEnvironmentError(false, 'Message here')
+        ).not.toThrowError(/Message here/);
       });
     });
   });

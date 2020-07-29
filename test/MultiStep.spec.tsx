@@ -1,17 +1,29 @@
 import React, { ReactNode } from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, act, RenderResult } from '@testing-library/react';
 
 import { MultiStep } from '../src';
 import { MultiStepContextType, Step } from '../src/types/context';
 import { Container, steps } from './__mocks__';
 
-interface WrapperConfig {
+type WrapperConfig = {
   steps: Step[];
   children: (bag: MultiStepContextType) => ReactNode;
   stepId?: string;
-}
+};
 
-const getWrapper = ({ steps, children, stepId }: WrapperConfig) => {
+type WrapperConfigResult = {
+  nextButton: HTMLElement;
+  previousButton: HTMLElement;
+  jumpToInput: HTMLElement;
+  jumpToButton: HTMLElement;
+  getInjected: () => MultiStepContextType;
+} & RenderResult;
+
+const getWrapper = ({
+  steps,
+  children,
+  stepId,
+}: WrapperConfig): WrapperConfigResult => {
   let injected: MultiStepContextType;
 
   const utils = render(
@@ -25,7 +37,7 @@ const getWrapper = ({ steps, children, stepId }: WrapperConfig) => {
 
   return {
     ...utils,
-    nextButton: utils.queryByText('Next'),
+    nextButton: utils.queryByText('Next')!,
     previousButton: utils.getByText('Previous'),
     jumpToInput: utils.getByPlaceholderText('Jump to step'),
     jumpToButton: utils.getByText('Jump!'),
@@ -62,14 +74,16 @@ describe('MultiStep', () => {
   });
 
   describe('when click on next', () => {
-    let wrapper: any;
-    beforeEach(() => {
+    let wrapper: WrapperConfigResult;
+    beforeEach(async () => {
       wrapper = getWrapper({
         steps,
         children: Container,
       });
 
-      fireEvent.click(wrapper.nextButton);
+      await act(async () => {
+        await fireEvent.click(wrapper.nextButton);
+      });
     });
 
     it('should go to next step', () => {
@@ -91,13 +105,15 @@ describe('MultiStep', () => {
     });
 
     describe('and click on previous button', () => {
-      it('should go back to first step', () => {
+      it('should go back to first step', async () => {
         const { getByText, previousButton } = wrapper;
 
         expect(getByText(steps[1].id)).toBeInTheDocument();
         expect(steps[1].Component).toHaveBeenCalledTimes(1);
 
-        fireEvent.click(previousButton);
+        await act(async () => {
+          await fireEvent.click(previousButton);
+        });
 
         expect(getByText(steps[0].id)).toBeInTheDocument();
         expect(steps[0].Component).toHaveBeenCalledTimes(2);
@@ -106,17 +122,22 @@ describe('MultiStep', () => {
   });
 
   describe('when fill input and click on jump', () => {
-    let wrapper: any;
+    let wrapper: WrapperConfigResult;
     const step = steps[3];
 
-    beforeEach(() => {
+    beforeEach(async () => {
       wrapper = getWrapper({
         steps,
         children: Container,
       });
 
-      fireEvent.change(wrapper.jumpToInput, { target: { value: step.id } });
-      fireEvent.click(wrapper.jumpToButton);
+      await act(async () => {
+        await fireEvent.change(wrapper.jumpToInput, {
+          target: { value: step.id },
+        });
+
+        await fireEvent.click(wrapper.jumpToButton);
+      });
     });
 
     it('should go to provided step', () => {
@@ -140,6 +161,8 @@ describe('MultiStep', () => {
 
   describe('when initial step id does not exist on steps', () => {
     it('should throw an error', () => {
+      spyOn(console, 'error');
+
       expect(() =>
         getWrapper({ steps, children: Container, stepId: 'DOES_NOT_EXIST' })
       ).toThrowError(/not found/);
@@ -154,7 +177,9 @@ describe('MultiStep', () => {
       });
       const { next } = getInjected();
 
-      expect(() => next()).toThrowError(/does not have next step/);
+      spyOn(console, 'error');
+
+      expect(() => act(() => next())).toThrowError(/does not have next step/);
     });
   });
 
@@ -166,7 +191,11 @@ describe('MultiStep', () => {
       });
       const { previous } = getInjected();
 
-      expect(() => previous()).toThrowError(/does not have previous step/);
+      spyOn(console, 'error');
+
+      expect(() => act(() => previous())).toThrowError(
+        /does not have previous step/
+      );
     });
   });
 });

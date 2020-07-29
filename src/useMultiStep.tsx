@@ -2,6 +2,7 @@ import { useReducer, useMemo, useCallback } from 'react';
 import last from 'lodash/last';
 
 import { ActionType, MultiStepReducer } from './types/reducer';
+import { devEnvironmentError } from './utils';
 import {
   MultiStepContextType,
   MultiStepTransformedProps,
@@ -12,11 +13,10 @@ export const reducer: MultiStepReducer = (state, action) => {
     case ActionType.PREVIOUS_STEP:
       const stepId = last<string>(state.history);
 
-      if (__DEV__) {
-        if (!stepId) {
-          throw new Error(`Step "${state.stepId}" does not have previous step`);
-        }
-      }
+      devEnvironmentError(
+        !stepId,
+        `Step "${state.stepId}" does not have previous step`
+      );
 
       return {
         ...state,
@@ -46,15 +46,11 @@ export const useMultiStep = (
   const { steps, stepId } = state;
 
   const step = useMemo(() => {
-    const step = steps.get(stepId);
+    const actualStep = steps.get(stepId);
 
-    if (__DEV__) {
-      if (!step) {
-        throw new Error(`Step "${stepId}" is not found`);
-      }
-    }
+    devEnvironmentError(!actualStep, `Step "${stepId}" is not found`);
 
-    return step;
+    return actualStep;
   }, [steps, stepId]);
 
   const progress = useMemo(
@@ -74,11 +70,10 @@ export const useMultiStep = (
   );
 
   const next = useCallback(() => {
-    if (__DEV__) {
-      if (!step?.nextStepId) {
-        throw new Error(`Step "${stepId}" does not have next step`);
-      }
-    }
+    devEnvironmentError(
+      !step?.nextStepId,
+      `Step "${stepId}" does not have next step`
+    );
 
     dispatch({
       type: ActionType.JUMP_TO_STEP,

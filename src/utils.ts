@@ -22,3 +22,11 @@ export const transformStepsToMap = (steps: Steps): MappedSteps =>
       },
     ])
   );
+
+export const devEnvironmentError = (condition: boolean, message: string) => {
+  if (process.env.NODE_ENV !== 'production') {
+    if (condition) {
+      throw new Error(message);
+    }
+  }
+};
