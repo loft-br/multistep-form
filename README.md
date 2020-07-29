@@ -1,3 +1,9 @@
+[![Actions Status](https://github.com/loft-br/multistep-form/workflows/Build%20and%20Test/badge.svg)](https://github.com/loft-br/multistep-form/actions)
+[![Coverage](https://codecov.io/gh/loft-br/multistep-form/branch/master/graph/badge.svg)](https://codecov.io/gh/loft-br/multistep-form)
+[![Code Climate](https://codeclimate.com/github/loft-br/multistep-form/badges/gpa.svg)](https://codeclimate.com/github/loft-br/multistep-form)
+[![NPM Version](https://img.shields.io/npm/v/@loft/multistep-form.svg)](https://www.npmjs.com/package/@loft/multistep-form)
+[![License](https://img.shields.io/npm/l/@loft/multistep-form.svg)](https://opensource.org/licenses/MIT)
+
 # Introduction
 
 Multistep-form is an open-source lib written in **React** created by
