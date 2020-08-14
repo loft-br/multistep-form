@@ -32,7 +32,7 @@ jobs:
           CI: true
 
       - name: Test
-        run: yarn test --ci --coverage --maxWorkers=2
+        run: yarn test
         env:
           CI: true
 
@@ -40,3 +40,10 @@ jobs:
         run: yarn build
         env:
           CI: true
+
+      - name: Codeclimate
+        uses: paambaati/codeclimate-action@v2.5.7
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID }}
+        with:
+          coverageCommand: yarn test --ci --coverage --maxWorkers=2 

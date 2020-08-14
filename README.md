@@ -1,6 +1,6 @@
 [![Actions Status](https://github.com/loft-br/multistep-form/workflows/Build%20and%20Test/badge.svg)](https://github.com/loft-br/multistep-form/actions)
-[![Coverage](https://codecov.io/gh/loft-br/multistep-form/branch/master/graph/badge.svg)](https://codecov.io/gh/loft-br/multistep-form)
-[![Code Climate](https://codeclimate.com/github/loft-br/multistep-form/badges/gpa.svg)](https://codeclimate.com/github/loft-br/multistep-form)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b1604a3d8b002cbab16a/test_coverage)](https://codeclimate.com/github/loft-br/multistep-form/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b1604a3d8b002cbab16a/maintainability)](https://codeclimate.com/github/loft-br/multistep-form/maintainability)
 [![NPM Version](https://img.shields.io/npm/v/@loft/multistep-form.svg)](https://www.npmjs.com/package/@loft/multistep-form)
 [![License](https://img.shields.io/npm/l/@loft/multistep-form.svg)](https://opensource.org/licenses/MIT)
 
@@ -61,7 +61,7 @@ import { useMultiStepContext } from '@loft/multistep-form';
 const MyComponent = () => {
   const context = useMultiStepContext();
 
-  return <>blah</>;
+  return <Fragment>blah</Fragment>;
 };
 ```
 
@@ -117,13 +117,13 @@ step the user is in, it's the following signature:
 // Container component
 const Container = ({ step: { id, Component, nextStepId }, next }) => {
   return (
-    <>
+    <Fragment>
       <p>
         You're in step with id <span>{id}</span>
       </p>
       <Component />
       {nextStepId && <button onClick={next}>Next</button>}
-    </>
+    </Fragment>
   );
 };
 
@@ -145,14 +145,14 @@ const Container = ({
   step: { Component },
 }) => {
   return (
-    <>
+    <Fragment>
       <p>
         You're in step <span>{current}</span>
         of the form that starts at <span>{first}</span>
         and ends at <span>{last}</span>
       </p>
       <Component />
-    </>
+    </Fragment>
   );
 };
 
@@ -173,10 +173,10 @@ that is, the user will go to the next step provided in the configuration.
 // Container component
 const Container = ({ step: { Component }, next }) => {
   return (
-    <>
+    <Fragment>
       <Component />
       <button onClick={next}>Next</button>
-    </>
+    </Fragment>
   );
 };
 
@@ -194,10 +194,10 @@ The `previous` method is useful for returning to the previous step.
 // Container component
 const Container = ({ step: { Component }, previous }) => {
   return (
-    <>
+    <Fragment>
       <Component />
       <button onClick={previous}>Previous</button>}
-    </>
+    </Fragment>
   );
 };
 
@@ -216,10 +216,10 @@ be before or after the current step.
 // Container component
 const Container = ({ step: { Component }, jumpTo }) => {
   return (
-    <>
+    <Fragment>
       <Component />
       <button onClick={() => jumpTo('third-step')}>Jump!</button>
-    </>
+    </Fragment>
   );
 };
 
