@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -7,6 +7,10 @@
     "dist",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loft-br/multistep-form"
+  },
   "engines": {
     "yarn": "^1.0.0",
     "node": ">=10"
@@ -34,7 +38,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "multistep",
+  "name": "@loft/multistep-form",
   "author": "Loft",
   "module": "dist/multistep.esm.js",
   "devDependencies": {
