@@ -3,6 +3,7 @@
 As a contributor, here are the guidelines we would like you to follow:
 
 - Contributing guidelines
+  - [Code of conduct](#code-of-conduct)
   - [Reporting Bugs](#reporting-bugs)
   - [Feature Requests](#feature-requests)
   - [Development](#development)
@@ -11,6 +12,10 @@ As a contributor, here are the guidelines we would like you to follow:
   - [PR Submission](#pr-submission)
     - [Tests](#tests)
     - [Docs + Examples](#docs-and-examples)
+
+## Code of conduct
+
+Be sure to follow our [code of conduct](CODE_OF_CONDUCT.md).
 
 ## Reporting Bugs
 
