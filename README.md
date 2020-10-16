@@ -2,7 +2,8 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b1604a3d8b002cbab16a/test_coverage)](https://codeclimate.com/github/loft-br/multistep-form/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b1604a3d8b002cbab16a/maintainability)](https://codeclimate.com/github/loft-br/multistep-form/maintainability)
 [![NPM Version](https://img.shields.io/npm/v/@loft/multistep-form.svg)](https://www.npmjs.com/package/@loft/multistep-form)
-[![License](https://img.shields.io/npm/l/@loft/multistep-form)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
 # Introduction
 
